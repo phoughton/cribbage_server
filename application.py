@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 import errors
-
+from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
 
 application = Flask(__name__)
+MAX_DATA_LIMIT = 10*1024
 
 
 def lists_to_tuples(list_of_lists):
@@ -15,6 +16,17 @@ def lists_to_tuples(list_of_lists):
     return out_list
 
 
+def limit_content_length(max_length=MAX_DATA_LIMIT):
+    def decorator(f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            cl = request.content_length
+            if cl is not None and cl > max_length:
+                abort(413)
+            return f(*args, **kwargs)
+        return wrapper
+    return decorator
+
 @application.errorhandler(errors.InvalidUsage)
 def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
@@ -23,10 +35,16 @@ def handle_invalid_usage(error):
 
 
 @application.route("/score/cut", methods=["POST"])
+@limit_content_length()
 def cutcalcscore():
+    required_fields = ["players", "cut_card", "dealer"]
+    
+    try:
+        req_data = request.get_json()
+    except:
+        errors.check_for_required_fields(None,required_fields)
 
-    req_data = request.get_json()
-    errors.check_for_required_fields(req_data, ["players", "cut_card", "dealer"])
+    errors.check_for_required_fields(req_data,required_fields)
 
     players = req_data["players"]
     cut_card = tuple(req_data["cut_card"])

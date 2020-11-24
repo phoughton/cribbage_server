@@ -18,8 +18,9 @@ class InvalidUsage(Exception):
 
 
 def check_for_required_fields(jsn, rqd_fields):
-    for field in rqd_fields:
-        if field not in jsn:
-            raise InvalidUsage(f"Missing '{field}'", status_code=400)
+    if jsn is not None:
+        for field in rqd_fields:
+            if field not in jsn:
+                raise InvalidUsage(f"Missing data field: {field}", status_code=400)
     else:
-        return None
+        raise InvalidUsage(f"Missing these data fields: {rqd_fields}", status_code=400)
