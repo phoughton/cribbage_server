@@ -13,7 +13,9 @@ def client():
 
 @pytest.mark.parametrize("players, played_cards, correct_scorer_1, correct_score_1, correct_scorer_2, correct_score_2, correct_count", [
         (["Abi", "Bob"], [[3,"C"],[10,"D"],[10,"H"]], "Abi", 3, "Bob", 0, 23),
-        (["Abi", "Bob"], [[11,"D"],[5, "D"]], "Abi", 0, "Bob", 3, 15)
+        (["Abi", "Bob"], [[11,"D"],[5, "D"]], "Abi", 0, "Bob", 3, 15),
+        (["Abi", "Bob"], [[3,"C"],[10,"D"],[10,"H"],[8,"S"]], "Abi", 2, "Bob", 2, 31),
+        (["Abi", "Bob"], [[3,"C"],[10,"D"],[10,"H"],[5,"S"],[3,"S"]], "Abi", 4, "Bob", 0, 31)
 ])
 def test_play_whole_2_player(client, players, played_cards, correct_scorer_1, correct_score_1, correct_scorer_2, correct_score_2, correct_count):
     req_data = {
