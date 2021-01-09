@@ -4,6 +4,9 @@ Cribbage Service is an API to support the [Cribbage scoring engine](https://gith
 
 Work in progress.
 
+### To run the tests:
+python -m pytest
+
 ### Quick install using pip & requirements.txt (recommended)
 Create a virtual environment and type this pip command at the command line. 
 ```bash

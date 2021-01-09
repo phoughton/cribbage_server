@@ -55,7 +55,7 @@ def cutcalcscore():
     return {"type": "cut", "score": scores, "message": msg}
 
 
-@application.route("/score/play_whole", methods=["POST"])
+@application.route("/score/play/set", methods=["POST"])
 def playcalcscorewhole():
 
     req_data = request.get_json()
@@ -69,17 +69,21 @@ def playcalcscorewhole():
     return {"type": "playwhole", "score": scores, "current_count": current_count, "play_log": play_log}
 
 
-@application.route("/score/play", methods=["POST"])
+@application.route("/score/play/ongoing", methods=["POST"])
 def playcalcscore():
 
     req_data = request.get_json()
     errors.check_for_required_fields(req_data, ["played_cards"])
 
     played_cards = lists_to_tuples(req_data["played_cards"])
+    if "last_card" in req_data:
+        last_card = req_data["last_card"]
+    else:
+        last_card = False
 
-    current_count, scores, play_log = cs.play_score_just_made(played_cards)
+    current_count, scores, play_log = cs.play_score_just_made(played_cards, last_card)
 
-    return {"type": "play", "score": scores, "current_count": current_count, "play_log": play_log}
+    return {"type": "play", "score": scores, "count": current_count, "play_log": play_log}
 
 
 @application.route("/score/show", methods=["POST"])

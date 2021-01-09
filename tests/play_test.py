@@ -22,7 +22,7 @@ def test_play_whole_2_player(client, players, played_cards, correct_scorer_1, co
         "players": players,
         "played_cards": played_cards
     }
-    resp = client.post("/score/play_whole", json=req_data)
+    resp = client.post("/score/play/set", json=req_data)
     resp_data = json.loads(resp.data)
     calc_scores = resp_data["score"]
     calc_play_log = resp_data["play_log"]
@@ -40,9 +40,32 @@ def test_play_whole_2_player(client, players, played_cards, correct_scorer_1, co
         ({}, 400),        
         ([], 400)
 ])
-def test_invalid_data(client, request_data, correct_status_code):
+def test_invalid_data_play_set(client, request_data, correct_status_code):
 
-    resp = client.post("/score/play_whole", json=request_data)
+    resp = client.post("/score/play/set", json=request_data)
 
     assert resp.status_code == correct_status_code
 
+
+@pytest.mark.parametrize("played_cards, last_card, correct_score, correct_count", [
+        ([[3,"C"],[10,"D"],[10,"H"]], False, 2, 23),
+        ([[11,"D"],[5, "D"]], False, 2, 15),
+        ([[11,"D"],[5, "D"]], True, 3, 15)
+])
+def test_play_ongoing_2_player(client, played_cards, last_card, correct_score, correct_count):
+    req_data = {
+        "last_card": last_card,
+        "played_cards": played_cards
+    }
+    resp = client.post("/score/play/ongoing", json=req_data)
+    resp_data = json.loads(resp.data)
+    calc_count = resp_data["count"]
+    calc_score = resp_data["score"]
+    calc_play_log = resp_data["play_log"]
+
+    assert calc_score == correct_score, \
+        f"The calculated score msg was: {calc_score}, the expected score: {correct_score} " + \
+        f"The play log {calc_play_log} "
+    assert calc_count == correct_count, \
+        f"The calculated count msg was: {calc_count}, the expected score: {correct_count} " + \
+        f"The play log {calc_play_log} "
