@@ -64,7 +64,7 @@ def playcalcscorewhole():
     players = req_data["players"]
     played_cards = lists_to_tuples(req_data["played_cards"])
 
-    scores, current_count, play_log = cs.play_calc_score_whole_game(played_cards, players)
+    scores, current_count, play_log = cs.play_calc_score_set(played_cards, players)
 
     return {"type": "playwhole", "score": scores, "current_count": current_count, "play_log": play_log}
 
@@ -81,7 +81,7 @@ def playcalcscore():
     else:
         last_card = False
 
-    current_count, scores, play_log = cs.play_score_just_made(played_cards, last_card)
+    current_count, scores, play_log = cs.play_score_ongoing(played_cards, last_card)
 
     return {"type": "play", "score": scores, "count": current_count, "play_log": play_log}
 
