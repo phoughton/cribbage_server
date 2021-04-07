@@ -93,7 +93,8 @@ jobs:
         run: |
           pwd
           ls -lrt
-
+          cd cribbage_server
+          ls -lrt
 
       # Create the Elastic Beanstalk application
       - name: Create EBS application
