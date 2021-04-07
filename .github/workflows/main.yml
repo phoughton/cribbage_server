@@ -91,7 +91,8 @@ jobs:
       # Create the Elastic Beanstalk application
       - name: Create EBS application
         run: |
-          eb init -p python-3.8 cribbage_server/application --region us-east-2
+          cd cribbage_server
+          eb init -p python-3.8 application --region us-east-2
 
       # Deploy to (or Create) the Elastic Beanstalk environment
       - name: Create test environment & deploy
