@@ -1,3 +1,4 @@
 cribbage-scorer
 flask
 pytest
+requests
