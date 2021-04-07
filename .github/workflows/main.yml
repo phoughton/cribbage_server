@@ -92,6 +92,7 @@ jobs:
       - name: Debug
         run: |
           pwd
+          ls -lrt
 
 
       # Create the Elastic Beanstalk application
