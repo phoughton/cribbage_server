@@ -5,7 +5,9 @@ Cribbage Service is an API to support the [Cribbage scoring engine](https://gith
 Work in progress.
 
 ### To run the tests:
+```bash
 python -m pytest
+```
 
 ### Quick install using pip & requirements.txt (recommended)
 Create a virtual environment and type this pip command at the command line. 
@@ -18,12 +20,12 @@ The below commands will run the server and will output a URL you can use to acce
 
 #### Windows:
 ```bash
-set FLASK_APP=application
+set FLASK_APP=cribbage_server\application
 flask run
 ```
 
 #### Linux/Unix/Mac/Bash:
 ```bash
-export FLASK_APP=application
+export FLASK_APP=cribbage_server/application
 flask run
 ```
