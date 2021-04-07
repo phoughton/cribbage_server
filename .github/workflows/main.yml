@@ -99,6 +99,7 @@ jobs:
       # Create the Elastic Beanstalk application
       - name: Create EBS application
         run: |
+          pwd
           eb init -p python-3.8 application --region us-east-2
 
       # Deploy to (or Create) the Elastic Beanstalk environment
