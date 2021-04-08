@@ -96,5 +96,4 @@ jobs:
       # Deploy to (or Create) the Elastic Beanstalk environment
       - name: Create test environment & deploy
         run: |
-          cd cribbage_server
           (eb use test-environment && eb status test-environment && eb deploy) || eb create test-environment
