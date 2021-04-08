@@ -1,7 +1,7 @@
 import pytest
 from cribbage_scorer import cribbage_scorer
 import requests, json
-from cribbage_server import application as cs
+import application as cs
 import os
 import tempfile
 

@@ -88,20 +88,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      # Debug
-      - name: Debug
-        run: |
-          pwd
-          ls -lrt
-          cd cribbage_server
-          ls -lrt
-
       # Create the Elastic Beanstalk application
       - name: Create EBS application
         run: |
-          pwd
-          cd cribbage_server
-          pwd
           eb init -p python-3.8 application --region us-east-2
 
       # Deploy to (or Create) the Elastic Beanstalk environment

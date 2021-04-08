@@ -20,12 +20,12 @@ The below commands will run the server and will output a URL you can use to acce
 
 #### Windows:
 ```bash
-set FLASK_APP=cribbage_server\application
+set FLASK_APP=application
 flask run
 ```
 
 #### Linux/Unix/Mac/Bash:
 ```bash
-export FLASK_APP=cribbage_server/application
+export FLASK_APP=application
 flask run
 ```

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, abort
-from cribbage_server import errors
+import errors
 from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
 
