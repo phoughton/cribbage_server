@@ -96,4 +96,4 @@ jobs:
       # Deploy to (or Create) the Elastic Beanstalk environment
       - name: Create test environment & deploy
         run: |
-          (eb use test-environment && eb status test-environment && eb deploy) || eb create test-environment
+          (eb use cribbage-test-environment && eb status cribbage-test-environment && eb deploy) || eb create cribbage-test-environment --instance-types t3.nano -ix 1
