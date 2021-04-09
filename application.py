@@ -38,7 +38,7 @@ def handle_invalid_usage(error):
 @application.route("/health", methods=["GET"])
 def health_check():
 
-    return { "status": "UP", "current_time" : f"{datetime.now()}"}
+    return { "status": "UP", "current_time" : f"{datetime.now().astimezone().isoformat()}"}
 
 
 @application.route("/score/cut", methods=["POST"])
