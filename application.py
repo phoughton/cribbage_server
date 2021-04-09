@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, abort
 import errors
 from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
+from datetime import datetime
 
 application = Flask(__name__)
 MAX_DATA_LIMIT = 10*1024
@@ -32,6 +33,12 @@ def handle_invalid_usage(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response
+
+
+@application.route("/health", methods=["GET"])
+def health_check():
+
+    return { "status": "UP", "current_time" : f"{datetime.now()}"}
 
 
 @application.route("/score/cut", methods=["POST"])
