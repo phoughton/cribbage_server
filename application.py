@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, abort
+from flask import Flask, request, jsonify, abort, render_template, send_from_directory
 import errors
 from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
@@ -6,6 +6,14 @@ from datetime import datetime
 
 application = Flask(__name__)
 MAX_DATA_LIMIT = 10*1024
+
+@application.route("/")
+def webapp():
+    return render_template('index.html')
+
+@application.route('/js/<path:path>')
+def send_js(path):
+    return send_from_directory('templates/js', path)
 
 
 def lists_to_tuples(list_of_lists):
