@@ -10,16 +10,24 @@ class LikeButton extends React.Component {
 
   render() {
     if (this.state.liked) {
-      return 'You liked this.';
+      return `Card Suit: ${this.props.commentID}`;
     }
 
     return e(
       'button',
       { onClick: () => this.setState({ liked: true }) },
-      'Like'
+      `${this.props.commentID}`
     );
   }
 }
 
-const domContainer = document.querySelector('#cribbage_container');
-ReactDOM.render(e(LikeButton), domContainer);
+// Find all DOM containers, and render Like buttons into them.
+document.querySelectorAll('.suit_container')
+  .forEach(domContainer => {
+    // Read the comment ID from a data-* attribute.
+    const cardSuit = domContainer.dataset.card_suit;
+    ReactDOM.render(
+      e(LikeButton, { commentID: cardSuit }),
+      domContainer
+    );
+  });

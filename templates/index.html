@@ -1,21 +1,101 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Cribbage Scorer</title>
-  </head>
-  <body>
+<body>
 
-    <!-- We will put our React component inside this div. -->
-    <div id="cribbage_container"></div>
+<h2>Cribbage Scorer</h2>
 
-    <!-- Load React. -->
-    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+Starter: <input id="starter" type="text" length=2 size=2 /><BR/>
+Hand 1: <input id="hand1" type="text" length=2 size=2/><BR/>
+Hand 2: <input id="hand2" type="text" length=2 size=2/><BR/>
+Hand 3: <input id="hand3" type="text" length=2 size=2/><BR/>
+Hand 4: <input id="hand4" type="text" length=2 size=2/><BR/>
 
-    <!-- Load our React component. -->
-    <script src="js/cribbage.js"></script>
+Crib? <input id="crib" type="checkbox" value=false/><BR/>
 
-  </body>
+<BR/>
+<button type="button" onclick="showScoreCalc()">Show Score Calc</button><BR/>
+
+<BR/>
+<div id="response_raw" >
+</div><BR/>
+Score:<div id="score_result"></div><BR/><BR/>
+Explanation: <div id="score_explanation"></div></div>
+
+
+<script>
+
+function displayResults(resultsJSON) {
+  console.log("Outputting")
+  let explain = "";
+  let msgArray =  resultsJSON["message"].split("|");
+  for (index=0; index<msgArray.length; index++) {
+    explain = explain + msgArray[index] + "<BR/>"
+  }
+
+  document.getElementById("score_explanation").innerHTML = explain;
+  document.getElementById("score_result").innerHTML = resultsJSON["score"];
+
+}
+function trandlateRank(rank) {
+  if (rank === 'A')
+    return '1';
+  
+  if (rank === 'J')
+    return '11';
+
+  if (rank === 'Q')
+    return '12';
+  
+  if (rank === 'K')
+    return '13';  
+  
+  return rank;
+}
+
+function showScoreCalc() {
+
+  let starterRaw = document.getElementById("starter").value.toUpperCase();
+  let crib = document.getElementById("crib").checked;
+
+  if (starterRaw.length !=2) {
+    alert("Enter starter in the form:\nAH or 5D");
+    return false;
+  }
+  let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
+
+  let handIDs = ["hand1", "hand2", "hand3", "hand4"]
+  let hand = [];
+
+  for (index=0; index < handIDs.length; index++) {
+    let handCard = document.getElementById(handIDs[index]).value.toUpperCase();
+    console.log(handCard);
+    if (handCard.length !=2) {
+      alert("Enter hand in the form:\nAH or KD");
+      return false;
+    }
+    hand.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
+  }
+
+  let requestBody = {"starter": starter, "hand": hand, "crib": crib}
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("response_raw").innerHTML =
+      this.responseText;
+      displayResults(JSON.parse(this.responseText));
+
+    } else {
+      console.log(this.responseText);
+    }
+  };
+  xhttp.open("POST", "/score/show", true);
+  xhttp.setRequestHeader("Content-Type", "application/json");
+
+  let bodyText = JSON.stringify(requestBody);
+  console.log(bodyText);
+  xhttp.send(bodyText);
+}
+</script>
+
+</body>
 </html>
