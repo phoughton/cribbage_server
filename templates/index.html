@@ -9,7 +9,7 @@
 }
 
 body {
-    margin:0;
+    margin:10px;
     width: 100%;
 }
 
@@ -21,9 +21,12 @@ body {
 .mainBody {
     background-color: yellow;
     position: absolute;
-    top: 40px;
-    bottom: 20px;
-    width:100%;
+    top: 10px;
+    bottom: 10px;
+    width:95%;
+    margin-left:10px;
+    padding:5px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
     </style>
@@ -32,23 +35,26 @@ body {
 <DIV class="mainBody">
 <h2>Cribbage Scorer</h2>
 
-Starter: <input id="starter" type="text" length=2 size=2 /><BR/>
-Hand 1: <input id="hand1" type="text" length=2 size=2/><BR/>
-Hand 2: <input id="hand2" type="text" length=2 size=2/><BR/>
-Hand 3: <input id="hand3" type="text" length=2 size=2/><BR/>
-Hand 4: <input id="hand4" type="text" length=2 size=2/><BR/>
-
-Crib? <input id="crib" type="checkbox" value=false/><BR/>
-
-<BR/>
-<button type="button" onclick="showScoreCalc()">Show Score Calc</button><BR/>
+<H3>Cards:</H3>
+<TABLE>
+<TR><TD>Starter:</TD><TD><input id="starter" type="text" length=2 size=2 tabindex=1 /> E.g.: 5H</TD></TR>
+<TR><TD>Card 1: </TD><TD><input id="hand1" type="text" length=2 size=2 tabindex=2 /> E.g.: 5D</TD></TR>
+<TR><TD>Card 2: </TD><TD><input id="hand2" type="text" length=2 size=2 tabindex=3 /> E.g.: 5C</TD></TR>
+<TR><TD>Card 3: </TD><TD><input id="hand3" type="text" length=2 size=2 tabindex=4 /> E.g.: 5S</TD></TR>
+<TR><TD>Card 4: </TD><TD><input id="hand4" type="text" length=2 size=2 tabindex=5 /> E.g.: JH</TD></TR>
+</TABLE>
 
 <BR/>
-Score:<div id="score_result"></div><BR/><BR/>
-Explanation: <div id="score_explanation"></div></div>
+(E.g.: AH = Ace of ♥, JH = Jack of ♥, QC = Queen of ♠, KD = King of ♦)
+<BR/><BR/>
+Crib? <input id="crib" type="checkbox" value=false tabindex=6 /><BR/>
+
+<BR/>
+<button type="button" onclick="showScoreCalc()" tabindex=7 >Show Score</button><BR/>
+
+<h3>Score:</h3><div id="score_result"><BR/></div>
+<h3>Explanation:</h3><div id="score_explanation"><BR/><BR/><BR/><BR/><BR/></div>
 </DIV>
-
-
 
 </body>
 <script>
