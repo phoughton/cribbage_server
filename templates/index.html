@@ -1,7 +1,35 @@
 <!DOCTYPE html>
 <html>
-<body>
+  <HEAD>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+    margin:0;
+    width: 100%;
+}
+
+.header {
+    height: 40px;
+    background-color: red;
+}
+
+.mainBody {
+    background-color: yellow;
+    position: absolute;
+    top: 40px;
+    bottom: 20px;
+    width:100%;
+}
+
+    </style>
+  </HEAD>
+<body>
+<DIV class="mainBody">
 <h2>Cribbage Scorer</h2>
 
 Starter: <input id="starter" type="text" length=2 size=2 /><BR/>
@@ -16,86 +44,82 @@ Crib? <input id="crib" type="checkbox" value=false/><BR/>
 <button type="button" onclick="showScoreCalc()">Show Score Calc</button><BR/>
 
 <BR/>
-<div id="response_raw" >
-</div><BR/>
 Score:<div id="score_result"></div><BR/><BR/>
 Explanation: <div id="score_explanation"></div></div>
+</DIV>
 
 
-<script>
-
-function displayResults(resultsJSON) {
-  console.log("Outputting")
-  let explain = "";
-  let msgArray =  resultsJSON["message"].split("|");
-  for (index=0; index<msgArray.length; index++) {
-    explain = explain + msgArray[index] + "<BR/>"
-  }
-
-  document.getElementById("score_explanation").innerHTML = explain;
-  document.getElementById("score_result").innerHTML = resultsJSON["score"];
-
-}
-function trandlateRank(rank) {
-  if (rank === 'A')
-    return '1';
-  
-  if (rank === 'J')
-    return '11';
-
-  if (rank === 'Q')
-    return '12';
-  
-  if (rank === 'K')
-    return '13';  
-  
-  return rank;
-}
-
-function showScoreCalc() {
-
-  let starterRaw = document.getElementById("starter").value.toUpperCase();
-  let crib = document.getElementById("crib").checked;
-
-  if (starterRaw.length !=2) {
-    alert("Enter starter in the form:\nAH or 5D");
-    return false;
-  }
-  let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
-
-  let handIDs = ["hand1", "hand2", "hand3", "hand4"]
-  let hand = [];
-
-  for (index=0; index < handIDs.length; index++) {
-    let handCard = document.getElementById(handIDs[index]).value.toUpperCase();
-    console.log(handCard);
-    if (handCard.length !=2) {
-      alert("Enter hand in the form:\nAH or KD");
-      return false;
-    }
-    hand.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
-  }
-
-  let requestBody = {"starter": starter, "hand": hand, "crib": crib}
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("response_raw").innerHTML =
-      this.responseText;
-      displayResults(JSON.parse(this.responseText));
-
-    } else {
-      console.log(this.responseText);
-    }
-  };
-  xhttp.open("POST", "/score/show", true);
-  xhttp.setRequestHeader("Content-Type", "application/json");
-
-  let bodyText = JSON.stringify(requestBody);
-  console.log(bodyText);
-  xhttp.send(bodyText);
-}
-</script>
 
 </body>
+<script>
+
+  function displayResults(resultsJSON) {
+    console.log("Outputting")
+    let explain = "";
+    let msgArray =  resultsJSON["message"].split("|");
+    for (index=0; index<msgArray.length; index++) {
+      explain = explain + msgArray[index] + "<BR/>"
+    }
+  
+    document.getElementById("score_explanation").innerHTML = explain;
+    document.getElementById("score_result").innerHTML = resultsJSON["score"];
+  
+  }
+  function trandlateRank(rank) {
+    if (rank === 'A')
+      return '1';
+    
+    if (rank === 'J')
+      return '11';
+  
+    if (rank === 'Q')
+      return '12';
+    
+    if (rank === 'K')
+      return '13';  
+    
+    return rank;
+  }
+  
+  function showScoreCalc() {
+  
+    let starterRaw = document.getElementById("starter").value.toUpperCase();
+    let crib = document.getElementById("crib").checked;
+  
+    if (starterRaw.length !=2) {
+      alert("Enter starter in the form:\nAH or 5D");
+      return false;
+    }
+    let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
+  
+    let handIDs = ["hand1", "hand2", "hand3", "hand4"]
+    let hand = [];
+  
+    for (index=0; index < handIDs.length; index++) {
+      let handCard = document.getElementById(handIDs[index]).value.toUpperCase();
+      console.log(handCard);
+      if (handCard.length !=2) {
+        alert("Enter hand in the form:\nAH or KD");
+        return false;
+      }
+      hand.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
+    }
+  
+    let requestBody = {"starter": starter, "hand": hand, "crib": crib}
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        displayResults(JSON.parse(this.responseText));
+      } else {
+        console.log(this.responseText);
+      }
+    };
+    xhttp.open("POST", "/score/show", true);
+    xhttp.setRequestHeader("Content-Type", "application/json");
+  
+    let bodyText = JSON.stringify(requestBody);
+    console.log(bodyText);
+    xhttp.send(bodyText);
+  }
+  </script>
 </html>
