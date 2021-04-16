@@ -111,7 +111,6 @@ def showcalcscore():
     hand = lists_to_tuples(req_data["hand"])
     crib = req_data["crib"]
 
-    print(starter, hand, crib)
     score, msg = cs.show_calc_score(starter, hand, crib)
 
     return {"type": "show", "score": score, "message": msg}
