@@ -87,8 +87,12 @@ Explanation: <div id="score_explanation"></div></div>
     let crib = document.getElementById("crib").checked;
   
     if (starterRaw.length !=2) {
-      alert("Enter starter in the form:\nAH or 5D");
-      return false;
+      if ((starterRaw.indexOf("10") === 0) && (starterRaw.length === 3)) {
+          // Chill
+        } else {
+          alert("Enter starter in the form:\nAH or 5D");
+          return false;
+        }
     }
     let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
   
@@ -99,8 +103,13 @@ Explanation: <div id="score_explanation"></div></div>
       let handCard = document.getElementById(handIDs[index]).value.toUpperCase();
       console.log(handCard);
       if (handCard.length !=2) {
-        alert("Enter hand in the form:\nAH or KD");
+        if ((handCard.indexOf("10") === 0) && (handCard.length === 3)) {
+          // Chill
+        } else {
+          alert("Enter hand in the form:\nAH or KD");
         return false;
+        }
+
       }
       hand.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
     }
