@@ -15,11 +15,10 @@ body {
 
 .header {
     height: 40px;
-    background-color: red;
 }
 
 .mainBody {
-    background-color: yellow;
+    background-color: white;
     position: absolute;
     top: 10px;
     bottom: 10px;
@@ -28,7 +27,9 @@ body {
     padding:5px;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+.go {
+  width:95%;
+}
     </style>
   </HEAD>
 <body>
@@ -36,21 +37,25 @@ body {
 <h2>Cribbage Scorer</h2>
 
 <H3>Cards:</H3>
-<TABLE>
-<TR><TD>Starter:</TD><TD><input id="starter" type="text" length=2 size=2 tabindex=0 /> E.g.: 5H</TD></TR>
-<TR><TD>Card 1: </TD><TD><input id="hand1" type="text" length=2 size=2 tabindex=1 /> E.g.: 5D</TD></TR>
-<TR><TD>Card 2: </TD><TD><input id="hand2" type="text" length=2 size=2 tabindex=2 /> E.g.: 5C</TD></TR>
-<TR><TD>Card 3: </TD><TD><input id="hand3" type="text" length=2 size=2 tabindex=3 /> E.g.: 5S</TD></TR>
-<TR><TD>Card 4: </TD><TD><input id="hand4" type="text" length=2 size=2 tabindex=4 /> E.g.: JH</TD></TR>
-</TABLE>
+<FORM>
+  <TABLE>
+    <TR><TD>Starter:</TD><TD><input id="starter" type="text" length="2" size="2" tabindex="1" /> E.g.: 5H</TD></TR>
+    <TR><TD>Card 1: </TD><TD><input id="hand1" type="text" length="2" size="2" tabindex="2" /> E.g.: 5D</TD></TR>
+    <TR><TD>Card 2: </TD><TD><input id="hand2" type="text" length="2" size="2" tabindex="3" /> E.g.: 5C</TD></TR>
+    <TR><TD>Card 3: </TD><TD><input id="hand3" type="text" length="2" size="2" tabindex="4" /> E.g.: 5S</TD></TR>
+    <TR><TD>Card 4: </TD><TD><input id="hand4" type="text" length="2" size="2" tabindex="5" /> E.g.: JH</TD></TR>
+  </TABLE>
+  
+  <BR/>
+  (E.g.: AH = Ace of ♥, JH = Jack of ♥, QC = Queen of ♠, KD = King of ♦)
+  <BR/><BR/>
+  Crib? 
+  <input id="crib" type="checkbox" value=false tabindex=6 /><BR/>
+  
+  <BR/>
+  <button type="button" onclick="showScoreCalc()" tabindex=7 class="go">Show Score</button><BR/>
+</FORM>
 
-<BR/>
-(E.g.: AH = Ace of ♥, JH = Jack of ♥, QC = Queen of ♠, KD = King of ♦)
-<BR/><BR/>
-Crib? <input id="crib" type="checkbox" value=false tabindex=5 /><BR/>
-
-<BR/>
-<button type="button" onclick="showScoreCalc()" tabindex=6 >Show Score</button><BR/>
 
 <h3>Score:</h3><div id="score_result"><BR/></div>
 <h3>Explanation:</h3><div id="score_explanation"><BR/><BR/><BR/><BR/><BR/></div>
