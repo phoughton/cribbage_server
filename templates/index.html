@@ -62,12 +62,12 @@ table, th, td {
     <TH>4</TH>
   </TR>
   <TR>
-    <TD><input id="starter" type="text" length="2" size="2" tabindex="1" /></TD>
+    <TD><input id="starter" type="text" maxlength="2" size="2" tabindex="1" /></TD>
     <TD> </TD>
-    <TD><input id="hand1" type="text" length="2" size="2" tabindex="2" /></TD>
-    <TD><input id="hand2" type="text" length="2" size="2" tabindex="3" /></TD>
-    <TD><input id="hand3" type="text" length="2" size="2" tabindex="4" /></TD>
-    <TD><input id="hand4" type="text" length="2" size="2" tabindex="5" /></TD>
+    <TD><input id="hand1" type="text" maxlength="2" size="2" tabindex="2" /></TD>
+    <TD><input id="hand2" type="text" maxlength="2" size="2" tabindex="3" /></TD>
+    <TD><input id="hand3" type="text" maxlength="2" size="2" tabindex="4" /></TD>
+    <TD><input id="hand4" type="text" maxlength="2" size="2" tabindex="5" /></TD>
   </TR>
   </TABLE>
   
@@ -123,35 +123,43 @@ table, th, td {
     let starterRaw = document.getElementById("starter").value.toUpperCase();
     let crib = document.getElementById("crib").checked;
   
-    if (starterRaw.length !=2) {
-      if ((starterRaw.indexOf("10") === 0) && (starterRaw.length === 3)) {
-          // Chill
-        } else {
-          alert("Enter starter in the form:\nAH or 5D");
-          return false;
-        }
-    }
     let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
   
     let handIDs = ["hand1", "hand2", "hand3", "hand4"]
-    let hand = [];
-  
-    for (index=0; index < handIDs.length; index++) {
-      let handCard = document.getElementById(handIDs[index]).value.toUpperCase();
-      console.log(handCard);
-      if (handCard.length !=2) {
-        if ((handCard.indexOf("10") === 0) && (handCard.length === 3)) {
-          // Chill
-        } else {
-          alert("Enter hand in the form:\nAH or KD");
-        return false;
-        }
+    let handTuple = [];
+    let handUnified = [];
 
-      }
-      hand.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
+    for (index=0; index < handIDs.length; index++) {
+      handUnified.push(document.getElementById(handIDs[index]).value.toUpperCase());
+    }
+
+    for (index=0; index < handIDs.length; index++) {
+      let handCard = handUnified[index];
+      handTuple.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
     }
   
-    let requestBody = {"starter": starter, "hand": hand, "crib": crib}
+    for (index=0; index < handIDs.length; index++) {
+      let handCard = handUnified[index];
+      if ("A23456789JQK".indexOf(handCard[0]) == -1 ){
+        alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, J, Q or K.");
+        return false;
+      }
+      if ("HCDS".indexOf(handCard[1]) == -1 ){
+        alert("Card (" + handCard + ") did not contain card suit: H, C, S or D.");
+        return false;
+      }
+    }
+
+    let allCards = handUnified.concat(starterRaw);
+    console.log("All cards: " + allCards);
+    for (index=0; index<allCards.length; index++) {
+      if (allCards.lastIndexOf(allCards[index]) > index) {
+        alert("Duplicate cards found!: E.g.: " + allCards[index]);
+        return false;
+      }
+    }
+
+    let requestBody = {"starter": starter, "hand": handTuple, "crib": crib}
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
