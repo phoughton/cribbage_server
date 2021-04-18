@@ -28,11 +28,14 @@ def test_invalid_data_play_setclient(client, request_data, correct_status_code):
 
 
 
-@pytest.mark.parametrize("request_data, correct_status_code", [
-        ({"starter": [3,"C"], "crib": True, "hand": [(1,"H"), (2,"H"), (3,"H"), (4,"H")] }, 200)
+@pytest.mark.parametrize("request_data, correct_status_code, score", [
+        ({"starter": [3,"C"], "crib": False, "hand": [(1,"H"), (2,"H"), (3,"H"), (4,"H")] }, 200, 14),
+        ({"starter": [5,"C"], "crib": False, "hand": [(5,"H"), (5,"S"), (5,"D"), (11,"C")] }, 200, 29)
+
 ])
-def test_valid_data_play_setclient(client, request_data, correct_status_code):
+def test_valid_data_play_setclient(client, request_data, correct_status_code, score):
 
     resp = client.post("/score/show", json=request_data)
 
     assert resp.status_code == correct_status_code
+    assert json.loads(resp.data)["score"] == score
