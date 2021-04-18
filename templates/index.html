@@ -138,23 +138,23 @@ table, th, td {
       handTuple.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
     }
   
-    for (index=0; index < handIDs.length; index++) {
-      let handCard = handUnified[index];
+    let allCards = handUnified.concat(starterRaw);
+    console.log("All cards: " + allCards);
+    for (index=0; index<allCards.length; index++) {
+      if (allCards.lastIndexOf(allCards[index]) > index) {
+        alert("Duplicate cards found!: E.g.: " + allCards[index]);
+        return false;
+      }
+    }
+
+    for (index=0; index < allCards.length; index++) {
+      let handCard = allCards[index];
       if ("A23456789JQK".indexOf(handCard[0]) == -1 ){
         alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, J, Q or K.");
         return false;
       }
       if ("HCDS".indexOf(handCard[1]) == -1 ){
         alert("Card (" + handCard + ") did not contain card suit: H, C, S or D.");
-        return false;
-      }
-    }
-
-    let allCards = handUnified.concat(starterRaw);
-    console.log("All cards: " + allCards);
-    for (index=0; index<allCards.length; index++) {
-      if (allCards.lastIndexOf(allCards[index]) > index) {
-        alert("Duplicate cards found!: E.g.: " + allCards[index]);
         return false;
       }
     }
