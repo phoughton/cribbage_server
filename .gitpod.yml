@@ -24,6 +24,7 @@ tasks:
       python -m pip install -r requirements.txt
   - command: source venv/bin/activate
     openMode: split-left
+  - init: docker build . --tag python-cribbage
 
 vscode:
   extensions:
