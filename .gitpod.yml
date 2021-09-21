@@ -25,6 +25,7 @@ tasks:
   - command: source venv/bin/activate
     openMode: split-left
   - init: docker build . --tag python-cribbage
+  - command: docker images
 
 vscode:
   extensions:
