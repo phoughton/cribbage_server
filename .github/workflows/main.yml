@@ -85,7 +85,7 @@ jobs:
       # Log in to ACR
       - name: Log in to ACR
         run: |
-          az acr login -n {{secrets.AZCR_USERNAME}} -p {{secrets.AZCR_PASSWORD}}
+          az acr login -n {{secrets.AZCR_USERNAME}} -u {{secrets.AZCR_USERNAME}} -p {{secrets.AZCR_PASSWORD}}
           az acr list -o table
   #     # Deploy to (or Create) the Elastic Beanstalk environment
   #     - name: Create test environment & deploy
