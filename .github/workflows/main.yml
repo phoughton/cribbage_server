@@ -84,10 +84,12 @@ jobs:
 
       # Log in to ACR
       - name: Log in to ACR
+        uses: azure/docker-login@v1
+        with:
+          login-server: investigatingsoftware.azurecr.io
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
         run: |
-          az acr login -n ${{secrets.AZCR_USERNAME}} -u ${{secrets.AZCR_USERNAME}} -p ${{secrets.AZCR_PASSWORD}}
-          az acr list -o table
-  #     # Deploy to (or Create) the Elastic Beanstalk environment
-  #     - name: Create test environment & deploy
-  #       run: |
-  #         (eb use cribbage-test-environment && eb status cribbage-test-environment && eb deploy) || eb create cribbage-test-environment --instance-types t3.nano -ix 1
+          docker build . -t investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
+          docker push investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
