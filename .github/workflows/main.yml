@@ -80,19 +80,13 @@ jobs:
           pip install azure-cli --upgrade
           az --version
 
-  #     # Configure AWS Credentials
-  #     - name: Configure AWS Credentials
-  #       uses: aws-actions/configure-aws-credentials@v1
-  #       with:
-  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         aws-region: us-east-2
 
-  #     # Create the Elastic Beanstalk application
-  #     - name: Create EBS application
-  #       run: |
-  #         eb init -p python-3.8 application --region us-east-2
 
+      # Log in to ACR
+      - name: Log in to ACR
+        run: |
+          az acr login -n {{secrets.AZCR_USERNAME}} -p {{secrets.AZCR_PASSWORD}}
+          az acr list -o table
   #     # Deploy to (or Create) the Elastic Beanstalk environment
   #     - name: Create test environment & deploy
   #       run: |
