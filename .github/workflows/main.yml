@@ -85,8 +85,8 @@ jobs:
         uses: azure/docker-login@v1
         with:
           login-server: investigatingsoftware.azurecr.io
-          username: ${{ secrets.ACR_USERNAME }}
-          password: ${{ secrets.ACR_PASSWORD }}
+          username: ${{ secrets.AZCR_USERNAME }}
+          password: ${{ secrets.AZCR_PASSWORD }}
 
       - run: |
           docker build . -t investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
