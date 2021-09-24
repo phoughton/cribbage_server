@@ -80,15 +80,13 @@ jobs:
           pip install azure-cli --upgrade
           az --version
 
-      # Log in to ACR
-      - name: Log in to ACR
+      # Log in to ACR & deploy
+      - name: Log in to ACR & deploy
         uses: azure/docker-login@v1
         with:
           login-server: investigatingsoftware.azurecr.io
           username: ${{ secrets.AZCR_USERNAME }}
-          password: ${{ secrets.AZCR_PASSWORD }}
-          
-      - name: Deploy to ACR 
+          password: ${{ secrets.AZCR_PASSWORD }} 
       - run: |
           docker build . -t investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
           docker push investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
