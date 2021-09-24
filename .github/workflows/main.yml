@@ -87,7 +87,8 @@ jobs:
           login-server: investigatingsoftware.azurecr.io
           username: ${{ secrets.AZCR_USERNAME }}
           password: ${{ secrets.AZCR_PASSWORD }}
-
+          
+      - name: Deploy to ACR 
       - run: |
           docker build . -t investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
           docker push investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
