@@ -2,3 +2,4 @@ cribbage-scorer >= 0.1.4
 flask
 pytest
 requests
+azure-cli
