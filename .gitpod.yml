@@ -18,14 +18,16 @@ github:
     # add a label once the prebuild is ready to pull requests (defaults to false)
     addLabel: prebuilt-in-gitpod
 tasks:
+  - init: docker build . --tag python-cribbage
+  - command: docker images
+    openMode: split-right
   - init: | 
       python -m venv venv
       source venv/bin/activate
       python -m pip install -r requirements.txt
   - command: source venv/bin/activate
     openMode: split-left
-  - init: docker build . --tag python-cribbage
-  - command: docker images
+
 
 vscode:
   extensions:
