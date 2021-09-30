@@ -20,13 +20,13 @@ github:
 tasks:
   - init: docker build . --tag python-cribbage
   - command: docker images
-    openMode: split-right
+    openMode: split-left
   - init: | 
       python -m venv venv
       source venv/bin/activate
       python -m pip install -r requirements.txt
   - command: source venv/bin/activate
-    openMode: split-left
+    openMode: split-right
 
 
 vscode:
