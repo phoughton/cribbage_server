@@ -22,11 +22,6 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - uses: actions/cache@v2
-        with:
-          path: ${{ env.pythonLocation }}
-          key: ${{ env.pythonLocation }}-${{ hashFiles('requirements.txt') }}-${{ matrix.python }}-${{ matrix.os }}
-
       # Install dependencies
       - name: Install dependencies
         run: |
