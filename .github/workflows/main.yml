@@ -21,19 +21,6 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Get pip cache dir
-        id: pip-cache
-        run: |
-          echo "::set-output name=dir::$(pip cache dir)"
-      
-      - name: Cache pip
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ matrix.python }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      
       # Install dependencies
       - name: Install dependencies
         run: |
@@ -61,20 +48,6 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: "3.9"
-
-      # Set up cache for pip
-      - name: Get pip cache dir
-        id: pip-cache
-        run: |
-          echo "::set-output name=dir::$(pip cache dir)"
-
-      - name: Cache pip
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
 
       # Azure CLI 
       - name: Get Azure CLI 
