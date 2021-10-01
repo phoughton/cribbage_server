@@ -5,11 +5,12 @@ on:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-test:
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         python-version: [3.6, 3.7, 3.8, 3.9]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE
@@ -32,7 +33,7 @@ jobs:
         run: |
           python -m pytest
 
-  deploy-to-acr:
+  deploy-to-azure-container-registry:
   #   # Only run this job if "build" has ended successfully
     needs:
       - build
