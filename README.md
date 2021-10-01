@@ -29,6 +29,3 @@ flask run
 export FLASK_APP=application
 flask run
 ```
-
-#### But...
-The code is actually container-able using Docker using the enclosed Dockerfile.
