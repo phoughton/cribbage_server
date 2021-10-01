@@ -36,7 +36,7 @@ jobs:
   deploy-to-azure-container-registry:
   #   # Only run this job if "build" has ended successfully
     needs:
-      - build
+      - build-and-test
       
     runs-on: ubuntu-latest
 
