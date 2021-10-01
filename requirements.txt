@@ -1,4 +1,4 @@
-cribbage-scorer >= 0.1.4
+cribbage-scorer
 flask
 pytest
 requests
