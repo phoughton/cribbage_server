@@ -30,6 +30,29 @@ jobs:
       - name: Run unit tests
         run: |
           python -m pytest
+  
+  add-comment:
+    runs-on: ubuntu-latest
+    needs:
+      - build-and-test
+    steps:
+      - id: get-comment-body
+        run: |
+          echo "## Hello from gitbot" > comment-body.md
+          date >> comment-body.md
+
+          body=$(cat comment-body.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo ::set-output name=body::$body
+
+      - name: Create commit comment
+        uses: peter-evans/commit-comment@v1
+        with:
+          body: ${{ steps.get-comment-body.outputs.body }}
+
+  
 
   deploy-to-azure-container-registry:
   #   # Only run this job if "build" has ended successfully
