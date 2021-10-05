@@ -29,3 +29,5 @@ flask run
 export FLASK_APP=application
 flask run
 ```
+
+This repo is also set up to store a copy of the app as a docker container to the Azure container registry and deploy a copy of that container to Azure.
