@@ -41,7 +41,7 @@ jobs:
           echo "## Hello from gitbot" > comment-body.md
           date >> comment-body.md
 
-          body=$(cat comment-body.txt)
+          body=$(cat comment-body.md)
           body="${body//'%'/'%25'}"
           body="${body//$'\n'/'%0A'}"
           body="${body//$'\r'/'%0D'}" 
