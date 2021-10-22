@@ -1,5 +1,0 @@
-docker build .
-docker images
-docker tag c90b803d1b33 investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
-docker images
-docker push investigatingsoftware.azurecr.io/investigatingsoftware/python-cribbage:latest
