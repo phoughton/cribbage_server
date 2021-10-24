@@ -29,5 +29,11 @@ flask run
 export FLASK_APP=application
 flask run
 ```
-
+###  Deployment
 This repo is also set up to store a copy of the app as a docker container to the Azure container registry and deploy a copy of that container to Azure.
+
+### What does it do?
+
+As well as providing a full API for scoring cribbage games, the server also has a simple UI for manual investigation & use.
+
+![Markdown UI](cribbage_ui.jpg)
