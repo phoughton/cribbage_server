@@ -62,7 +62,7 @@ table, th, td {
     <TH>4</TH>
   </TR>
   <TR>
-    <TD><input id="starter" type="text" maxlength="2" size="2" tabindex="1" /></TD>
+    <TD><input id="starter" type="text" maxlength="3" size="3" tabindex="1" /></TD>
     <TD> </TD>
     <TD><input id="hand1" type="text" maxlength="3" size="3" tabindex="2" /></TD>
     <TD><input id="hand2" type="text" maxlength="3" size="3" tabindex="3" /></TD>
@@ -135,7 +135,11 @@ table, th, td {
 
     for (index=0; index < handIDs.length; index++) {
       let handCard = handUnified[index];
-      handTuple.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
+      if (handCard[0] === 1 && handCard[1] === 0) {
+        handTuple.push([parseInt(10), `${handCard[2]}`]);
+      } else {
+        handTuple.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
+      }
     }
   
     let allCards = handUnified.concat(starterRaw);
@@ -149,8 +153,8 @@ table, th, td {
 
     for (index=0; index < allCards.length; index++) {
       let handCard = allCards[index];
-      if ("A23456789JQK".indexOf(handCard[0]) == -1 ){
-        alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, J, Q or K.");
+      if ("A2345678910JQK".indexOf(handCard[0]) == -1 ){
+        alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q or K.");
         return false;
       }
       if ("HCDS".indexOf(handCard[1]) == -1 ){
