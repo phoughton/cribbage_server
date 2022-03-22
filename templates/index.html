@@ -157,7 +157,12 @@ table, th, td {
         alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q or K.");
         return false;
       }
-      if ("HCDS".indexOf(handCard[1]) == -1 ){
+      if (handCard[0] === 1 && handCard[1] === 0) {
+        indexOfSuit = 2;
+      } else {
+        indexOfSuit = 1;
+      }
+      if ("HCDS".indexOf(handCard[indexOfSuit]) == -1 ){
         alert("Card (" + handCard + ") did not contain card suit: H, C, S or D.");
         return false;
       }
