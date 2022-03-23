@@ -20,13 +20,13 @@ The below commands will run the server and will output a URL you can use to acce
 
 #### Windows:
 ```bash
-set FLASK_APP=application
+set FLASK_APP=app
 flask run
 ```
 
 #### Linux/Unix/Mac/Bash:
 ```bash
-export FLASK_APP=application
+export FLASK_APP=app
 flask run
 ```
 ###  Deployment

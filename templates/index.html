@@ -102,6 +102,7 @@ table, th, td {
     document.getElementById("score_result").innerHTML = resultsJSON["score"];
   
   }
+
   function trandlateRank(rank) {
     if (rank === 'A')
       return '1';
@@ -118,15 +119,27 @@ table, th, td {
     return rank;
   }
   
+  function isATen(handCard) {
+    return (handCard[0] === "1" && handCard[1] === "0");
+  } // func is A Ten
+
+  function convertToTuple(handCard) {
+
+    if (isATen(handCard)) {
+      return [10, `${handCard[2]}`];
+    } else {
+      return [parseInt(trandlateRank( handCard[0])), `${handCard[1]}`];
+    }
+  } // convert to tuple
+
   function showScoreCalc() {
   
     let starterRaw = document.getElementById("starter").value.toUpperCase();
     let crib = document.getElementById("crib").checked;
-  
-    let starter = [parseInt(trandlateRank( starterRaw[0])), `${starterRaw[1]}`]
-  
+    let starter =  convertToTuple(starterRaw);
+
     let handIDs = ["hand1", "hand2", "hand3", "hand4"]
-    let handTuple = [];
+    let handTuples = [];
     let handUnified = [];
 
     for (index=0; index < handIDs.length; index++) {
@@ -135,16 +148,25 @@ table, th, td {
 
     for (index=0; index < handIDs.length; index++) {
       let handCard = handUnified[index];
-      if (handCard[0] === "1" && handCard[1] === "0") {
-        handTuple.push([parseInt(10), `${handCard[2]}`]);
-      } else {
-        handTuple.push([parseInt(trandlateRank( handCard[0])), `${handCard[1]}`]);
-      }
+      handTuples.push(convertToTuple(handCard));
     }
   
+    // Checks on all cards
     let allCards = handUnified.concat(starterRaw);
     console.log("All cards: " + allCards);
     for (index=0; index<allCards.length; index++) {
+      if (allCards[index].trim() === "") {
+        alert("Empty cards found!");
+        return false;
+      }
+      if (allCards[index][0] === "1" && allCards[index][1] !== "0" && allCards[index].length == 3) {
+        alert("Jacks, Kings & Queens should use J, K, Q. e.g. JH = Jack of Hearts.");
+        return false;
+      }
+      if (allCards[index][0] === "1" && allCards[index][1] !== "0") {
+        alert("Aces should be entered as AH or AD etc!");
+        return false;
+      }
       if (allCards.lastIndexOf(allCards[index]) > index) {
         alert("Duplicate cards found!: E.g.: " + allCards[index]);
         return false;
@@ -157,7 +179,7 @@ table, th, td {
         alert("Card (" + handCard + ") did not contain valid card rank: A, 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q or K.");
         return false;
       }
-      if (handCard[0] === "1" && handCard[1] === "0") {
+      if (isATen(handCard)) {
         indexOfSuit = 2;
       } else {
         indexOfSuit = 1;
@@ -168,7 +190,7 @@ table, th, td {
       }
     }
 
-    let requestBody = {"starter": starter, "hand": handTuple, "crib": crib}
+    let requestBody = {"starter": starter, "hand": handTuples, "crib": crib}
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
