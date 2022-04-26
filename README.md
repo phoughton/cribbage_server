@@ -18,13 +18,13 @@ pip install -r requirements.txt
 ### Running the app
 The below commands will run the server and will output a URL you can use to access it.
 
-#### Windows:
+#### Windows 10/11:
 ```bash
 set FLASK_APP=app
 flask run
 ```
 
-#### Linux/Unix/Mac/Bash:
+#### Linux/Unix/Mac/Bash (inc WSL):
 ```bash
 export FLASK_APP=app
 flask run
