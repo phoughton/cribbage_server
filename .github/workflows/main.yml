@@ -31,7 +31,7 @@ jobs:
         run: |
           python -m pytest
 
-  deploy-to-azure-container-registry:
+  deploy-to-container-registries:
   # Only run this job if "build" has ended successfully
     environment: cribbage_container_registries
     needs:
