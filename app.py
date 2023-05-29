@@ -3,13 +3,36 @@ import errors
 from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
 from datetime import datetime
+from flask_cors import CORS
+from flask import Response
+
 
 application = Flask(__name__)
+CORS(application)
 MAX_DATA_LIMIT = 10*1024
 
 @application.route("/")
 def webapp():
     return render_template('index.html')
+
+@application.route("/.well-known/ai-plugin.json")
+def plugin_manifest():
+    with open("./.well-known/ai-plugin.json") as f:
+        text = f.read()
+    
+    return text
+
+@application.route("/openapi.yaml")
+def openapi():
+    with open("./openapi.yaml") as f:
+        text = f.read()
+    
+    return Response(text, mimetype="text/yaml")
+
+@application.route("/legal")
+def legal():
+    return render_template('legal.html')
+
 
 @application.route('/js/<path:path>')
 def send_js(path):
@@ -114,3 +137,38 @@ def showcalcscore():
     score, msg = cs.show_calc_score(starter, hand, crib)
 
     return {"type": "show", "score": score, "message": msg}
+
+
+@application.route("/score_hand_show", methods=["POST"])
+def show_calc_score_open_api():
+
+    ranks_to_num = {"A": 1, "2": 2, "3": 3, "4": 4, "5": 5,
+                    "6": 6, "7": 7, "8": 8, "9": 9, "10": 10,
+                    "J": 11, "Q": 12, "K": 13}
+
+    req_data = request.get_json()
+    errors.check_for_required_fields(req_data, ["starter", "hand", "isCrib"])
+
+    hand = []
+    for card in req_data["hand"]:
+        if len(card) > 3:
+            raise Exception("Error: Invalid card ID.")
+        suit = card[-1]
+        
+        if len(card) == 3:
+            rank = card[0:2]
+        else:
+            rank = card[0]
+        hand.append((ranks_to_num.get(rank), suit))
+    
+    if len(req_data["starter"]) == 3:
+        starter = (ranks_to_num.get(req_data["starter"][0:2]), req_data["starter"][-1])
+    else:
+        starter = (ranks_to_num.get(req_data["starter"][0]), req_data["starter"][-1])
+
+    crib = req_data["isCrib"]
+
+    score, msg = cs.show_calc_score(starter, hand, crib)
+
+    return {"type": "show", "score": score, "message": msg}
+

@@ -3,3 +3,4 @@ flask
 pytest
 requests
 azure-cli
+flask-cors
