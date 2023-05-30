@@ -9,9 +9,9 @@
     },
     "api": {
         "type": "openapi",
-        "url": "http://localhost:5000/openapi.yaml"
+        "url": "http://cribbage.azurewebsites.net//openapi.yaml"
     },
-    "logo_url": "http://localhost:5000/static/crib_scorer_logo.png",
+    "logo_url": "http://cribbage.azurewebsites.net/static/crib_scorer_logo.png",
     "contact_email": "pete@investigatingsoftware.co.uk",
-    "legal_info_url": "http://localhost:5000/legal"
+    "legal_info_url": "http://cribbage.azurewebsites.net/legal"
 }

@@ -148,6 +148,7 @@ def show_calc_score_open_api():
 
     req_data = request.get_json()
     errors.check_for_required_fields(req_data, ["starter", "hand", "isCrib"])
+    errors.check_for_fields_populated(req_data, "hand", 4)
 
     hand = []
     for card in req_data["hand"]:
@@ -172,3 +173,7 @@ def show_calc_score_open_api():
 
     return {"type": "show", "score": score, "message": msg}
 
+
+if __name__ == "__main__":
+    application.run(port=5000, host="0.0.0.0")
+    

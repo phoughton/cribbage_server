@@ -24,3 +24,8 @@ def check_for_required_fields(jsn, rqd_fields):
                 raise InvalidUsage(f"Missing data field: {field}", status_code=400)
     else:
         raise InvalidUsage(f"Missing these data fields: {rqd_fields}", status_code=400)
+    
+def check_for_fields_populated(jsn, field, size):
+
+    if len(jsn[field]) != size:
+        raise InvalidUsage(f"Missing/incomplete data in field: {field}", status_code=400)
