@@ -9,7 +9,7 @@
     },
     "api": {
         "type": "openapi",
-        "url": "https://cribbage.azurewebsites.net//openapi.yaml"
+        "url": "https://cribbage.azurewebsites.net/openapi.yaml"
     },
     "logo_url": "https://cribbage.azurewebsites.net/static/crib_scorer_logo.png",
     "contact_email": "pete@investigatingsoftware.co.uk",
