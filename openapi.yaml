@@ -4,7 +4,7 @@ info:
   description: API for calculating scores in a card game
   version: 1.0.0
 servers:
-  - url: http://cribbage.azurewebsites.net/
+  - url: https://cribbage.azurewebsites.net/
 paths:
   /score_hand_show:
     post:
