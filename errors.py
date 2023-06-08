@@ -36,8 +36,8 @@ def check_for_dupes(jsn):
 
     all_cards = []
 
-    all_cards.append(jsn["hand"])
-    all_cards.append(jsn["starter"])
+    all_cards.extend(jsn["hand"])
+    all_cards.extend(jsn["starter"])
 
     if len(all_cards) != len(set(all_cards)):
         raise InvalidUsage(f"There are duplicate cards, cribbage is played using a single deck of cards", status_code=400)
