@@ -17,7 +17,7 @@ def client():
         ({"starter": ["Abi", "Bob"], "dealer": "Abi"}, 400),
         ({"players": ["Abi", "Bob"], "crib": [[3,"C"]]},400),
         ({"starter": -5}, 400),
-        ({}, 400),        
+        ({}, 400),      
         ([], 400)
 ])
 def test_invalid_data_play_setclient(client, request_data, correct_status_code):
@@ -25,7 +25,6 @@ def test_invalid_data_play_setclient(client, request_data, correct_status_code):
     resp = client.post("/score/show", json=request_data)
 
     assert resp.status_code == correct_status_code
-
 
 
 @pytest.mark.parametrize("request_data, correct_status_code, score", [
@@ -39,3 +38,13 @@ def test_valid_data_play_setclient(client, request_data, correct_status_code, sc
 
     assert resp.status_code == correct_status_code
     assert json.loads(resp.data)["score"] == score
+
+
+@pytest.mark.parametrize("request_data, correct_status_code", [
+        ({"starter": "JH", "hand": ["JH", "AS", "5H", "9D"], "isCrib": False}, 400)
+])
+def test_invalid_data_simplified_show_score(client, request_data, correct_status_code):
+
+    resp = client.post("/score/show", json=request_data)
+
+    assert resp.status_code == correct_status_code

@@ -149,6 +149,7 @@ def show_calc_score_open_api():
     req_data = request.get_json()
     errors.check_for_required_fields(req_data, ["starter", "hand", "isCrib"])
     errors.check_for_fields_populated(req_data, "hand", 4)
+    errors.check_for_dupes(req_data)
 
     hand = []
     for card in req_data["hand"]:

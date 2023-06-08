@@ -24,8 +24,20 @@ def check_for_required_fields(jsn, rqd_fields):
                 raise InvalidUsage(f"Missing data field: {field}", status_code=400)
     else:
         raise InvalidUsage(f"Missing these data fields: {rqd_fields}", status_code=400)
-    
+
+
 def check_for_fields_populated(jsn, field, size):
 
     if len(jsn[field]) != size:
         raise InvalidUsage(f"Missing/incomplete data in field: {field}", status_code=400)
+
+
+def check_for_dupes(jsn):
+
+    all_cards = []
+
+    all_cards.append(jsn["hand"])
+    all_cards.append(jsn["starter"])
+
+    if len(all_cards) != len(set(all_cards)):
+        raise InvalidUsage(f"There are duplicate cards, cribbage is played using a single deck of cards", status_code=400)
