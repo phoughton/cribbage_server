@@ -41,10 +41,24 @@ def test_valid_data_play_setclient(client, request_data, correct_status_code, sc
 
 
 @pytest.mark.parametrize("request_data, correct_status_code", [
-        ({"starter": "JH", "hand": ["JH", "AS", "5H", "9D"], "isCrib": False}, 400)
+        ({"starter": "KC", "hand": ["5H", "6D", "7S", "JC"],"isCrib": False}, 200),
+        ({"starter": "AC", "hand": ["JH", "AS", "5H", "9C"], "isCrib": False}, 200)
+
+])
+def test_valid_data_simplified_show_score(client, request_data, correct_status_code):
+
+    resp = client.post("/score_hand_show", json=request_data)
+
+    assert resp.status_code == correct_status_code
+
+
+@pytest.mark.parametrize("request_data, correct_status_code", [
+        ({"starter": "KC", "hand": ["5H", "6D", "7S", "KC"],"isCrib": False}, 400),
+        ({"starter": "9C", "hand": ["JH", "AS", "5H", "9C"], "isCrib": False}, 400),
+        ({"starter": "2C", "hand": ["JH", "AS", "5H"], "isCrib": False}, 400)
 ])
 def test_invalid_data_simplified_show_score(client, request_data, correct_status_code):
 
-    resp = client.post("/score/show", json=request_data)
+    resp = client.post("/score_hand_show", json=request_data)
 
     assert resp.status_code == correct_status_code
