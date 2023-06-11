@@ -5,6 +5,7 @@ from cribbage_scorer import cribbage_scorer as cs
 from datetime import datetime
 from flask_cors import CORS
 from flask import Response
+from app_utils import translate_card
 
 
 application = Flask(__name__)
@@ -142,10 +143,6 @@ def showcalcscore():
 @application.route("/score_hand_show", methods=["POST"])
 def show_calc_score_open_api():
 
-    ranks_to_num = {"A": 1, "2": 2, "3": 3, "4": 4, "5": 5,
-                    "6": 6, "7": 7, "8": 8, "9": 9, "10": 10,
-                    "J": 11, "Q": 12, "K": 13}
-
     req_data = request.get_json()
     errors.check_for_required_fields(req_data, ["starter", "hand", "isCrib"])
     errors.check_for_fields_populated(req_data, "hand", 4)
@@ -153,28 +150,15 @@ def show_calc_score_open_api():
 
     hand = []
     for card in req_data["hand"]:
-        if len(card) > 3:
-            raise Exception("Error: Invalid card ID.")
-        suit = card[-1]
-        
-        if len(card) == 3:
-            rank = card[0:2]
-        else:
-            rank = card[0]
-        hand.append((ranks_to_num.get(rank), suit))
+        card_tuple = translate_card(card)
+        hand.append(card_tuple)
     
-    if len(req_data["starter"]) == 3:
-        starter = (ranks_to_num.get(req_data["starter"][0:2]), req_data["starter"][-1])
-    else:
-        starter = (ranks_to_num.get(req_data["starter"][0]), req_data["starter"][-1])
-
+    starter_tuple = translate_card(req_data["starter"])
     crib = req_data["isCrib"]
-
-    score, msg = cs.show_calc_score(starter, hand, crib)
+    score, msg = cs.show_calc_score(starter_tuple, hand, crib)
 
     return {"type": "show", "score": score, "message": msg}
 
 
 if __name__ == "__main__":
     application.run(port=5000, host="0.0.0.0")
-    
