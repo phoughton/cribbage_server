@@ -2,7 +2,7 @@
 
 Cribbage Service is an API to support the [Cribbage scoring engine](https://github.com/phoughton/cribbage_scorer) for the classic card game.
 
-Work in progress.
+Now available as a ChatGPT Plugin!
 
 ### To run the tests:
 ```bash
