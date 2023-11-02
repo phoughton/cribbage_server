@@ -4,6 +4,10 @@ Cribbage Service is an API to support the [Cribbage scoring engine](https://gith
 
 Now available as a ChatGPT Plugin!
 
+<img src="https://github.com/phoughton/cribbage_server/raw/master/static/chatgpt4_crib_hand.png?raw=true" width="400" style="max-width: 100%;">
+
+## Local setup
+
 ### To run the tests:
 ```bash
 python -m pytest
