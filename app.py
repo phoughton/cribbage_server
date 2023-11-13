@@ -16,19 +16,22 @@ MAX_DATA_LIMIT = 10*1024
 def webapp():
     return render_template('index.html')
 
+
 @application.route("/.well-known/ai-plugin.json")
 def plugin_manifest():
     with open("./.well-known/ai-plugin.json") as f:
         text = f.read()
-    
+
     return text
+
 
 @application.route("/openapi.yaml")
 def openapi():
     with open("./openapi.yaml") as f:
         text = f.read()
-    
+
     return Response(text, mimetype="text/yaml")
+
 
 @application.route("/legal")
 def legal():
