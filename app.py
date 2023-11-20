@@ -12,6 +12,7 @@ application = Flask(__name__)
 CORS(application)
 MAX_DATA_LIMIT = 10*1024
 
+
 @application.route("/")
 def webapp():
     return render_template('index.html')
@@ -36,6 +37,11 @@ def openapi():
 @application.route("/legal")
 def legal():
     return render_template('legal.html')
+
+
+@application.route("/privacy")
+def privacy():
+    return render_template('privacy.html')
 
 
 @application.route('/js/<path:path>')
