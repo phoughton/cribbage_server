@@ -32,6 +32,10 @@ paths:
                 - starter
                 - hand
                 - isCrib
+            example:
+              starter: "5H"
+              hand: ["5D", "5S", "JC", "KH"]
+              isCrib: false
       responses:
         '200':
           description: OK
