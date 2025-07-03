@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, abort, render_template, send_from_directory
+from flask import Flask, request, jsonify, abort, render_template, send_from_directory, send_file
 import errors
 from functools import wraps
 from cribbage_scorer import cribbage_scorer as cs
@@ -6,16 +6,22 @@ from datetime import datetime
 from flask_cors import CORS
 from flask import Response
 from app_utils import translate_card
+import os
 
 
-application = Flask(__name__)
+application = Flask(__name__, static_folder='react-ui/build/static', static_url_path='/static')
 CORS(application)
 MAX_DATA_LIMIT = 10*1024
 
 
 @application.route("/")
 def webapp():
-    return render_template('index.html')
+    return send_file('react-ui/build/index.html')
+
+
+@application.route('/static/<path:path>')
+def serve_react_static(path):
+    return send_from_directory('react-ui/build/static', path)
 
 
 @application.route("/.well-known/ai-plugin.json")
