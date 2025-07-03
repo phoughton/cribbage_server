@@ -16,12 +16,30 @@ MAX_DATA_LIMIT = 10*1024
 
 @application.route("/")
 def webapp():
-    return send_file('react-ui/build/index.html')
+    try:
+        return send_file('react-ui/build/index.html')
+    except FileNotFoundError:
+        # Fallback to original template if React build not found
+        return render_template('index.html')
 
 
 @application.route('/static/<path:path>')
 def serve_react_static(path):
     return send_from_directory('react-ui/build/static', path)
+
+
+# Catch-all route for React Router (SPA routing)
+@application.route('/<path:path>')
+def catch_all(path):
+    # Don't interfere with API routes
+    if path.startswith('score') or path.startswith('health') or path.startswith('openapi') or path.startswith('.well-known'):
+        abort(404)
+    
+    try:
+        return send_file('react-ui/build/index.html')
+    except FileNotFoundError:
+        # Fallback to original template if React build not found
+        return render_template('index.html')
 
 
 @application.route("/.well-known/ai-plugin.json")
