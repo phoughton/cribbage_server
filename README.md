@@ -2,10 +2,6 @@
 
 Cribbage Service is an API to support the [Cribbage scoring engine](https://github.com/phoughton/cribbage_scorer) for the classic card game.
 
-Now available as a ChatGPT Plugin!
-
-<img src="https://github.com/phoughton/cribbage_server/raw/master/static/chatgpt4_crib_hand.png?raw=true" width="400" style="max-width: 100%;">
-
 ## Local setup
 
 ### To run the tests:
@@ -33,11 +29,18 @@ flask run
 export FLASK_APP=app
 flask run
 ```
+or:
+
+```bash
+python app.py
+```
+
+
 ###  Deployment
 This repo is also set up to store a copy of the app as a docker container to the Azure container registry and deploy a copy of that container to Azure.
 
 ### What does it do?
 
-As well as providing a full API for scoring cribbage games, the server also has a simple UI for manual investigation & use.
+As well as providing a full API for scoring cribbage games, the server also has a simple React UI for manual investigation & use.
 
-![Markdown UI](cribbage_ui.jpg)
+![Markdown UI](cribbage_ui.png)
