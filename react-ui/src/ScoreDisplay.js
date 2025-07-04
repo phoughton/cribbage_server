@@ -1,4 +1,5 @@
 import React from 'react';
+import { translateCardArraysInMessage } from './cardUtils';
 
 const ScoreDisplay = ({ score }) => {
   if (!score) {
@@ -34,7 +35,7 @@ const ScoreDisplay = ({ score }) => {
             <div className="breakdown-list">
               {messages.map((message, index) => (
                 <div key={index} className="breakdown-item">
-                  {message.trim()}
+                  {translateCardArraysInMessage(message.trim())}
                 </div>
               ))}
             </div>
